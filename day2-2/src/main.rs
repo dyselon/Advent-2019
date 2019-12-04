@@ -30,20 +30,22 @@ fn run(initial_memory: &Vec<usize>, nounverb: usize) -> usize {
     let mut ip = 0;
 
     while ip < memory.len() {
+        // get the opcode (or bail if it's HALT)
         let opcode = memory[ip];
         if opcode == 99 { break; }
-        let left_index = memory[ip+1];
-        let left = memory[left_index];
-        let right_index = memory[ip+2];
-        let right = memory[right_index];
         let op = if opcode == 1 { add } else { mul };
-        let op_str = if opcode == 1 { "+" } else { "*" };
-        let dest = memory[ip+3];
-        let result = op(left, right);
-        memory[dest] = result;
-        ip += 4;
-        //println!("{}, {}, {}, {} -> {} {} {} = {}", opcode, left_index, right_index, dest, left, op_str, right, result);
 
+        // get the operands and calculate a result
+        let left = memory[memory[ip+1]];
+        let right = memory[memory[ip+2]];
+        let result = op(left, right);
+
+        // stash the result in the destination
+        let dest = memory[ip+3];
+        memory[dest] = result;
+
+        // advance the ip
+        ip += 4;
     }
     println!("Result at 0 for {}: {}", nounverb, memory[0]);
     memory[0]
