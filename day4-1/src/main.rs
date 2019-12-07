@@ -8,14 +8,14 @@ fn main() {
     let start: u32 = args[1].parse::<u32>().expect("Arg 1 (start) must be a number");
     let end: u32 = args[2].parse::<u32>().expect("Arg 2 (end) must be a number");
 
-    let results = (start..end).filter(|i| pass_valid(split_digits(*i))).count();
+    let results = (start..end).filter(|i| pass_valid(&split_digits(*i))).count();
 
     println!("{}, {}, results: {}", start, end, results);
 
     //let file_contents = fs::read_to_string(path).expect("Couldn't find the file");
 }
 
-fn pass_valid(digits: Vec<u32>) -> bool {
+fn pass_valid(digits: &Vec<u32>) -> bool {
     if digits.len() != 6 { return false; }
     if digits.iter().any(|d| d >= &10) { return false; }
     let mut dupe_found = false;
@@ -61,22 +61,22 @@ mod test {
 
     #[test]
     fn valid111111() {
-        assert_eq!(pass_valid(split_digits(111111)), true);
+        assert_eq!(pass_valid(&split_digits(111111)), true);
     }
     
     #[test]
     fn valid223450() {
-        assert_eq!(pass_valid(split_digits(223450)), false);
+        assert_eq!(pass_valid(&split_digits(223450)), false);
     }
 
     #[test]
     fn valid123789() {
-        assert_eq!(pass_valid(split_digits(123789)), false);
+        assert_eq!(pass_valid(&split_digits(123789)), false);
     }
 
     #[test]
     fn valid234566() {
-        assert_eq!(pass_valid(split_digits(234566)), true);
+        assert_eq!(pass_valid(&split_digits(234566)), true);
     }
 
 }
