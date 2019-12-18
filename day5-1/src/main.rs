@@ -29,20 +29,4 @@ mod test {
         println!("{:?}", &vm.memory);
         assert!(vm.memory[0] == 5, "1101, 2, 3, 0 => 5");
     }
-
-    #[test]
-    fn pos_eq_8_true() {
-        let mut vm = VM::new(&[3,9,8,9,10,9,4,9,99,-1,8], &[8]);
-        vm.run().expect("ran");
-        println!("{:?}", &vm.memory);
-        assert!(vm.output[0] == 1, "1101, 2, 3, 0 => 5");
-    }
-
-    #[test]
-    fn pos_eq_8_false() {
-        let mut vm = VM::new(&[3,9,8,9,10,9,4,9,99,-1,8], &[10]);
-        vm.run().expect("ran");
-        println!("{:?}", &vm.memory);
-        assert!(vm.output[0] == 0, "1101, 2, 3, 0 => 5");
-    }
 }
